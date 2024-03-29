@@ -118,3 +118,6 @@ def activate(request, uidb64, token):
         return redirect('home')
     else:
         return render(request,'activation_failed.html')
+    
+def forgot_password(request):
+    return render(request, 'authentication/forgot_password.html')
