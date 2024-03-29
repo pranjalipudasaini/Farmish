@@ -1,0 +1,27 @@
+body, html {
+    margin : 0;
+    padding : 0;
+    height : 100%;
+    }
+    .dashboard-nav {
+    background-color : #333;
+    color : red;
+    height : 100%;
+    width : 250px;
+    position : fixed;
+    overflow : auto;
+    }
+    .main-content {
+    margin-left : 250px;
+    padding : 20px;
+    }
+    .dashboard-nav a {
+    display : block;
+    color : white;
+    padding : 16px;
+    text-decoration : none;
+    }
+    .dashboard-nav a:hover {
+    background-color : #ddd;
+    color : black;
+    }
