@@ -1,0 +1,50 @@
+{% extends "authentication/base.html" %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block banner_slider %}
+<style>
+  .carousel-item img {
+      width: 100%;
+      height: 600px; 
+      object-fit: cover; 
+  }
+</style>
+<div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'images/bannerimg1.jpeg' %}" class="d-block w-100" alt="banner image">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/bannerimg2.jpeg' %}" class="d-block w-100" alt="banner image">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/bannerimg3.jpg' %}" class="d-block w-100" alt="banner image">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/bannerimg4.jpg' %}" class="d-block w-100" alt="banner image">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{% endblock banner_slider  %}
+
+{% block information %}
+<div class="container">
+    <div class="row bg-success text-center p-5 text-white border-bottom shadow">
+        <h1>Products</h1>
+        <small class="fs-5">Farmish provides a wide range of products coming straight from the farms of local farmers.</small>
+    </div>
+</div>
+{% endblock information %}
+
+{% block main-content %}
+<p>Please display main content here after adding products to database. Thank you!</p>
+{% endblock main-content %}
