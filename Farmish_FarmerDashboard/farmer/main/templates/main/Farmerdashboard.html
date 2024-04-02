@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Farmer Dashboard
+{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl">Farmer Dashboard</h1>
+
+<!-- Include your existing form directly here -->
+<form method="post" action="{% url 'add_product' %}" enctype="multipart/form-data" class="my-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="py-4 px-8 bg-teal-500 text-white hover:bg-teal-800" type="submit">Submit</button>
+</form>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="mt-4 px-8 py-4 bg-teal-200 text-teal-800">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if form.errors %}
+    <div class="mt-4 px-8 py-4 bg-red-200 text-red-800">
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                {{ field|title }}: {{ error }}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}
