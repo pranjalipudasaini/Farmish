@@ -1,0 +1,23 @@
+<!-- products/templates/products/shop.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shop</title>
+    <!-- Include your CSS stylesheets here -->
+</head>
+<body>
+    <h1>My Shop</h1>
+    <div class="product-cards">
+        {% for product in products %}
+            <div class="product-card">
+                <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}">
+                <h3>{{ product.product_name }}</h3>
+                <p>Price: ${{ product.rate }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Add other content as needed -->
+</body>
+</html>
