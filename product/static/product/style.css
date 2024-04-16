@@ -2,7 +2,7 @@
 
 /* Navigation bar */
 .navbar {
-    background-color: #007bff;
+    background-color: #198754;
     color: white;
     padding: 15px;
     display: flex;
@@ -95,16 +95,18 @@ form button {
 
 .btn {
     display: inline-block;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #198754;
+    color: #000000;
     padding: 10px 20px;
     text-decoration: none;
+    border-color: #000000;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #000000;
+    color: #FFFFFF;
 }
 
 /* product-detail container */
