@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -15,4 +15,7 @@ urlpatterns = [
     path('category/<str:foo>', views.category, name='category'),
     path('category_summary/', views.category_summary, name='category_summary'),
     path('search/', views.search, name='search'),
+    
+    # Include the URLs of the 'product' app with the namespace 'product'
+    path('product/', include('product.urls', namespace='product')),
 ]

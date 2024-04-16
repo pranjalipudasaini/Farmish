@@ -79,7 +79,7 @@ class Cart():
 					if product.is_sale:
 						total = total + (product.sale_price * value)
 					else:
-						total = total + (product.price * value)
+						total = total + (product.rate * value)
 
 
 

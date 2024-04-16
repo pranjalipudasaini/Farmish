@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category, Profile
+from .models import Profile
+from product.models import Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
 
+from product.models import Product
 from payment.forms import ShippingForm
 from payment.models import ShippingAddress
 
@@ -13,6 +15,7 @@ from django import forms
 from django.db.models import Q
 import json
 from cart.cart import Cart
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def search(request):
@@ -20,7 +23,7 @@ def search(request):
 	if request.method == "POST":
 		searched = request.POST['searched']
 		# Query The Products DB Model
-		searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+		searched = Product.objects.filter(Q(product_name__icontains=searched) | Q(description__icontains=searched))
 		# Test for null
 		if not searched:
 			messages.success(request, "That Product Does Not Exist...Please try Again.")
@@ -79,6 +82,7 @@ def update_password(request):
 	else:
 		messages.success(request, "You Must Be Logged In To View That Page...")
 		return redirect('home')
+	
 def update_user(request):
 	if request.user.is_authenticated:
 		current_user = User.objects.get(id=request.user.id)
@@ -97,21 +101,22 @@ def update_user(request):
 
 
 def category_summary(request):
-	categories = Category.objects.all()
-	return render(request, 'category_summary.html', {"categories":categories})	
+    categories = Category.objects.all()
+    print(categories) 
+    return render(request, 'category_summary.html', {"categories": categories})
 
 def category(request, foo):
-	# Replace Hyphens with Spaces
-	foo = foo.replace('-', ' ')
-	# Grab the category from the url
-	try:
-		# Look Up The Category
-		category = Category.objects.get(name=foo)
-		products = Product.objects.filter(category=category)
-		return render(request, 'category.html', {'products':products, 'category':category})
-	except:
-		messages.success(request, ("That Category Doesn't Exist..."))
-		return redirect('home')
+    # Replace Hyphens with Spaces
+    foo = foo.replace('-', ' ')
+    
+    try:
+        # Look Up The Category
+        category = Category.objects.get(name=foo)
+        products = Product.objects.filter(category=category)
+        return render(request, 'category.html', {'products':products, 'category':category})
+    except ObjectDoesNotExist:
+        messages.error(request, "Category Does Not Exist")
+        return redirect('home')
 
 
 def product(request,pk):

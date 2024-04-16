@@ -65,12 +65,12 @@
                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
 
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                            <img class="card-img-top" src="{{ product.product_image.url }}" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ product.name }}</h5>
+                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
                                     <!-- Sale -->
                 <div class="d-flex justify-content-center small text-warning mb-2">
                 <div class="bi-star-fill"></div>
@@ -80,9 +80,10 @@
 
                                     <!-- Product price-->
                                     <strike>
-                                    ₹{{ product.price }}
+                                    ₹{{ product.rate }}
                                     </strike>
                                     &nbsp;
+                                    <br>
                                     ₹{{ product.sale_price }}
                                 </div>
                             </div>
@@ -99,14 +100,14 @@
                 <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                            <img class="card-img-top" src="{{ product.product_image.url }}" alt="{{ product.product_name }}">
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ product.name }}</h5>
+                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
                                     <!-- Product price-->
-                                    ₹{{ product.price }}
+                                    ₹{{ product.rate }}
                                 </div>
                             </div>
                             <!-- Product actions-->
