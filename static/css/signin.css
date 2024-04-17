@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)), url(/static/images/farmersmarketdisplay.jpeg);
+    padding: 20px;
+    background-size: cover; 
+    background-position: center; 
+}
+
+.signinHeading {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+    padding-bottom: 20px;
+}
+
+form {
+    background-color: #000000;
+    color: #ffffff;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    margin: auto;
+    margin-top: 160px;
+    width: 600px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    float: right;
+    align-content: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.username, .password {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.forgotPass{
+    color: #ffffff;
+    float: right;
+}
+
+.signinButton {
+    margin-top: 20px;
+    background-color: #51aa69;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    width: 200px;
+}
+
+.signinButton:hover {
+    background-color: #366249;
+}
+
+.left-content {
+    padding-top: 550px;
+    color: #ffffff;
+}
+
+.p1{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.p2{
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.p3{
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.signupButton{
+    background-color: #51aa69;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    width: 150px;
+}
+
+.signupButton:hover {
+    background-color: #366249;
+}
+
+.socials{
+    margin-top: 10px;
+    width: 100px;
+}
+
+.alert {
+    padding: 15px;
+    background-color: #f44336; 
+    color: white;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-dismissible .close {
+    float: right;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.alert-success {
+    background-color: #4CAF50; 
+}
+
+.alert-info {
+    background-color: #2196F3; 
+}
+
+.alert-warning {
+    background-color: #ff9800; 
+}
