@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category, Profile
+from .models import Profile
+from product.models import Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
 
+from product.models import Product
 from payment.forms import ShippingForm
 from payment.models import ShippingAddress
 
@@ -13,6 +16,7 @@ from django import forms
 from django.db.models import Q
 import json
 from cart.cart import Cart
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def search(request):
@@ -20,7 +24,7 @@ def search(request):
 	if request.method == "POST":
 		searched = request.POST['searched']
 		# Query The Products DB Model
-		searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+		searched = Product.objects.filter(Q(product_name__icontains=searched) | Q(description__icontains=searched))
 		# Test for null
 		if not searched:
 			messages.success(request, "That Product Does Not Exist...Please try Again.")
@@ -79,6 +83,7 @@ def update_password(request):
 	else:
 		messages.success(request, "You Must Be Logged In To View That Page...")
 		return redirect('home')
+	
 def update_user(request):
 	if request.user.is_authenticated:
 		current_user = User.objects.get(id=request.user.id)
@@ -97,21 +102,22 @@ def update_user(request):
 
 
 def category_summary(request):
-	categories = Category.objects.all()
-	return render(request, 'category_summary.html', {"categories":categories})	
+    categories = Category.objects.all()
+    print(categories) 
+    return render(request, 'category_summary.html', {"categories": categories})
 
 def category(request, foo):
-	# Replace Hyphens with Spaces
-	foo = foo.replace('-', ' ')
-	# Grab the category from the url
-	try:
-		# Look Up The Category
-		category = Category.objects.get(name=foo)
-		products = Product.objects.filter(category=category)
-		return render(request, 'category.html', {'products':products, 'category':category})
-	except:
-		messages.success(request, ("That Category Doesn't Exist..."))
-		return redirect('home')
+    # Replace Hyphens with Spaces
+    foo = foo.replace('-', ' ')
+    
+    try:
+        # Look Up The Category
+        category = Category.objects.get(name=foo)
+        products = Product.objects.filter(category=category)
+        return render(request, 'category.html', {'products':products, 'category':category})
+    except ObjectDoesNotExist:
+        messages.error(request, "Category Does Not Exist")
+        return redirect('home')
 
 
 def product(request,pk):
@@ -131,37 +137,40 @@ def contact_us(request):
 	return render(request, 'contact_us.html', {})	
 
 def login_user(request):
-	if request.method == "POST":
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request, user)
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
 
-			# Do some shopping cart stuff
-			current_user = Profile.objects.get(user__id=request.user.id)
-			# Get their saved cart from database
-			saved_cart = current_user.old_cart
-			# Convert database string to python dictionary
-			if saved_cart:
-				# Convert to dictionary using JSON
-				converted_cart = json.loads(saved_cart)
-				# Add the loaded cart dictionary to our session
-				# Get the cart
-				cart = Cart(request)
-				# Loop thru the cart and add the items from the database
-				for key,value in converted_cart.items():
-					cart.db_add(product=key, quantity=value)
+            # Do some shopping cart stuff
+            current_user_profile = Profile.objects.get(user=user)
 
-			messages.success(request, ("You Have Been Logged In!"))
-			return redirect('home')
-		else:
-			messages.success(request, ("There was an error, please try again..."))
-			return redirect('login')
+            # Check if the user is a farmer or consumer
+            if current_user_profile.is_farmer:
+                return redirect('product:product_list')
+            else:
+                # Get their saved cart from the database
+                saved_cart = current_user_profile.old_cart
+                # Convert database string to python dictionary
+                if saved_cart:
+                    # Convert to dictionary using JSON
+                    converted_cart = json.loads(saved_cart)
+                    # Add the loaded cart dictionary to our session
+                    # Get the cart
+                    cart = Cart(request)
+                    # Loop thru the cart and add the items from the database
+                    for key, value in converted_cart.items():
+                        cart.db_add(product=key, quantity=value)
 
-	else:
-		return render(request, 'login.html', {})
-
+                messages.success(request, "You Have Been Logged In!")
+                return redirect('home')
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
+            return redirect('login')
+    else:
+        return render(request, 'login.html', {})
 
 def logout_user(request):
 	logout(request)

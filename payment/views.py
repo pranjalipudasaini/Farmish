@@ -22,7 +22,8 @@ def checkout(request):
 		shipping_form = ShippingForm(request.POST or None)
 		return render(request, "payment/checkout.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals, "shipping_form":shipping_form})
 
-	
+def payment(request):
+	return render(request,"payment/payment.html", {})	
 
 def payment_success(request):
 	return render(request, "payment/payment_success.html", {})

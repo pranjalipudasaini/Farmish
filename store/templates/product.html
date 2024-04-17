@@ -7,12 +7,12 @@
 <div class="card mb-3">
  <div class="row g-0">
     <div class="col-md-4">
-      <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+      <img src="{{ product.product_image.url }}" class="img-fluid rounded-start" alt="{{ product.product_name }}">
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <center>
-        <h5 class="card-title">{{ product.name }}</h5>
+        <h5 class="card-title">{{ product.product_name }}</h5>
         <br/>
         <p class="card-text justified">{{ product.description }}</p>
         
@@ -25,13 +25,13 @@
 
                 <!-- Product price-->
                 <strike>
-                ₹{{ product.price }}
+                ₹{{ product.rate }}
                 </strike>
                 &nbsp;
                 ₹{{ product.sale_price }}
 
         {% else %}
-            ₹{{ product.price }}
+            ₹{{ product.rate }}
             
         {% endif %}
             <br/><br/>
